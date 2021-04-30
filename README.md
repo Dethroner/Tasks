@@ -9,7 +9,7 @@ src="https://cdn.imgbin.com/11/20/3/imgbin-vagrant-hashicorp-virtual-machine-sof
 height=48 width=48 alt="Vagrant Logo" /><img
 src="https://www.virtualbox.org/graphics/vbox_logo2_gradient.png"
 height=48 width=48 alt="VirtualBox Logo" /><img
-src="https://ru.wikipedia.org/wiki/%D0%A4%D0%B0%D0%B9%D0%BB:CentOS_color_logo.svg"
+src="https://4.bp.blogspot.com/-pzbhEk68WJA/V_foOw_QWzI/AAAAAAAAlgg/9_xcZCTxhWo_S2ftXEyFdCw5Wk-CunNzwCLcB/s1600/centos-logo.png"
 height=48 width=48 alt="CentOS Logo" />
 
 Для работы нужны:
