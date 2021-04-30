@@ -8,7 +8,9 @@ EPAM<br>
 src="https://cdn.imgbin.com/11/20/3/imgbin-vagrant-hashicorp-virtual-machine-software-developer-installation-vagrant-ywTTwLKhjrGBxXiPdJNgpkc9D.jpg"
 height=48 width=48 alt="Vagrant Logo" /><img
 src="https://www.virtualbox.org/graphics/vbox_logo2_gradient.png"
-height=48 width=48 alt="VirtualBox Logo" />
+height=48 width=48 alt="VirtualBox Logo" /><img
+src="https://www.centos.org/assets/img/centos-logo-white.png"
+height=48 width=48 alt="CentOS Logo" />
 
 Для работы нужны:
 1. Установленный Vagrant<br>
