@@ -1,0 +1,19 @@
+IMAGE_NAME = "generic/centos7"
+HOSTNAME = "RB"
+
+Vagrant.configure("2") do |config|
+
+	config.vm.define HOSTNAME do |master|
+		master.vm.provider "virtualbox" do |v|
+			v.name = HOSTNAME
+			v.memory = 2048
+			v.cpus = 2
+		end
+		master.vm.box = IMAGE_NAME
+		master.vm.network "private_network", ip: "192.168.1.5"
+		master.vm.hostname = HOSTNAME
+		master.vm.synced_folder ".", "/vagrant", type: "virtualbox"
+		master.vm.provision :shell, privileged: true, path: "./files/user-slave.sh", args: "appuser"
+
+	end
+end
