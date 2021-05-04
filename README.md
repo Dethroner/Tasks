@@ -24,10 +24,10 @@ height=48 width=48 alt="CentOS Logo" />
 
 <li>Для выполнения задания 5 использовал [VM's](Tasks/01CentOS/1/).</li>
 
-<li>Для простых задач использую [VM](Tasks/01CentOS/2/) подключаюсь, так:</li><br>
+<li>Для простых задач использую [VM](Tasks/01CentOS/2/) подключаюсь, так:</li>
 ```
 ssh appuser@192.168.1.5 -i ~/.ssh/appuser
 ```
-<br><b>!!!</b> Пользователям надо заменить [appuser.pub](Tasks\01CentOS\2\files\.sshkey\) на собственный.
+<b>!!!</b> Пользователям надо заменить [appuser.pub](Tasks\01CentOS\2\files\.sshkey\) на собственный.
 </p>
 </details>
