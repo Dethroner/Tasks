@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ### 1
-USER="name_surname"
+USER="Ruslan_Bykau"
 groupadd -g 505 $USER
 useradd $USER -u 505 -g 505 -m -d /home/$USER -s /bin/bash
 echo "P@ssw0rd" | passwd --stdin "$USER"
@@ -123,5 +123,5 @@ cat /logs/mongo/mongod.log | grep "[initandlisten]"
 echo "##################################################"
 systemctl status mongod
 echo "##################################################"
-echo "PID mongod:" pgrep -f mongod
+echo "PID mongod:" $(pgrep -f mongod)
 netstat -tulpan | grep "mongod"
