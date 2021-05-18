@@ -1,0 +1,28 @@
+IMAGE_NAME = "generic/debian10"
+
+Vagrant.configure("2") do |config|
+    config.vm.box = IMAGE_NAME
+    config.vm.define "lb" do |ap|
+        ap.vm.provider "virtualbox" do |v|
+            v.name = "lb"
+            v.memory = 1024
+            v.cpus = 1
+        end
+        ap.vm.network "private_network", ip: "192.168.1.10"
+        ap.vm.hostname = "lb"
+#       ap.vm.synced_folder ".", "/vagrant", type: "virtualbox"
+        ap.vm.provision :shell, privileged: true, path: "./files/provisiona.sh"
+    end
+
+    config.vm.define "tom" do |tm|
+        tm.vm.provider "virtualbox" do |v|
+            v.name = "tom"
+            v.memory = 2048
+            v.cpus = 2
+        end
+        tm.vm.hostname = "tom"
+        tm.vm.network "private_network", ip: "192.168.1.20"
+        tm.vm.provision :shell, privileged: true, path: "./files/provisiont.sh"
+
+    end
+end
