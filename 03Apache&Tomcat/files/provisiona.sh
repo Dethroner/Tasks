@@ -17,7 +17,7 @@ cp ./apache-2.0/mod_jk.so /usr/lib/apache2/modules
 
 #
 cat <<EOF | tee /etc/apache2/workers.properties
-worker.list=master,slave,loadbalancer,jkstatus
+worker.list=loadbalancer,jkstatus
 worker.master.type=ajp13
 worker.master.host=192.168.1.20
 worker.master.port=8009
@@ -46,17 +46,28 @@ worker.jkstatus.type=status
 EOF
 
 cat <<EOT >> /etc/apache2/apache2.conf 
-LoadModule jk_module /usr/lib/apache2/modules/mod_jk.so
-
-JkWorkersFile /etc/apache2/workers.properties
-logsJkLogFile /var/log/apache2/mod_jk.log
-[debug/error/info]JkLogLevel info
-JkLogStampFormat "[%a %b %d %H:%M:%S %Y] "
-JkOptions +ForwardKeySize +ForwardURICompat -ForwardDirectories 
-JkRequestLogFormat "%w %V %T"
-
-JkMount /stat jkstatus
-JkMount / loadbalancer
+Include mod-jk.conf
 EOT
 
+cat <<EOF | tee /etc/apache2/mod-jk.conf
+LoadModule jk_module /usr/lib/apache2/modules/mod_jk.so
+JkWorkersFile /etc/apache2/workers.properties
+JkShmFile /var/log/apache2/jk-runtime-status
+JkLogFile /var/log/apache2/mod_jk.log
+JkLogLevel info
+JkLogStampFormat "[%a %b %d %H:%M:%S %Y] "
+JkOptions +ForwardKeySize +ForwardURICompat -ForwardDirectories 
+
+JkMount /clusterjsp/* loadbalancery
+
+
+<Location /jkstatus/>
+    JkMount jkstatus
+    Order deny,allow
+    Deny from all
+    Allow from 127.0.0.1
+</Location>
+EOF
+
+source /etc/apache2/envvars
 systemctl start apache2

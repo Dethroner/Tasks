@@ -65,8 +65,8 @@ done
 sed -i '22s/port="8005"/port="8006"/' /opt/tomcat/2/conf/server.xml
 sed -i '68s/port="8080"/port="8081"/' /opt/tomcat/2/conf/server.xml
 sed -i '70s/redirectPort="8443"/redirectPort="8444"/' /opt/tomcat/2/conf/server.xml
-sed -i '103 i <Connector protocol="AJP/1.3" port="8010" redirectPort="8444" />' /opt/tomcat/2/conf/server.xml
-sed -i '103 i <Connector protocol="AJP/1.3" port="8009" redirectPort="8443" />' /opt/tomcat/1/conf/server.xml
+sed -i '103 i <Connector protocol="AJP/1.3" port="8010" redirectPort="8444" address="0.0.0.0" secretRequired="false" />' /opt/tomcat/2/conf/server.xml
+sed -i '103 i <Connector protocol="AJP/1.3" port="8009" redirectPort="8443" address="0.0.0.0" secretRequired="false" />' /opt/tomcat/1/conf/server.xml
 
 # Configure Tomcat Web Management Interface
 sed -i '44 i <user username="admin" password="P@ssw0rd" roles="manager-gui,admin-gui"/>' /opt/tomcat/1/conf/tomcat-users.xml
