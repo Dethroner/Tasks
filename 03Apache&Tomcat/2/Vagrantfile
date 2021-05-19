@@ -1,0 +1,38 @@
+IMAGE_NAME = "generic/debian10"
+
+required_plugins = %w( vagrant-reload vagrant-vbguest )
+required_plugins.each do |plugin|
+    exec "vagrant plugin install #{plugin};vagrant #{ARGV.join(" ")}" unless Vagrant.has_plugin? plugin || ARGV[0] == 'plugin'
+end
+
+Vagrant.configure("2") do |config|
+    config.vm.box=IMAGE_NAME
+    config.vm.define "lb" do |ap|
+        ap.vm.box = "generic/centos7"
+        ap.vm.provider "virtualbox" do |v|
+            v.name = "lb"
+            v.memory = 1024
+            v.cpus = 1
+        end
+        ap.vm.network "private_network", ip: "192.168.1.10"
+        ap.vm.hostname = "lb"
+        ap.vm.provision :shell, privileged: true, path: "./files/provisiona.sh"
+        ap.vm.provision :shell, privileged: true, inline: <<-SHELL
+            sed -i '7s/enforcing/disabled/' /etc/selinux/config
+            systemctl stop firewalld
+        SHELL
+        ap.vm.provision :reload
+    end
+
+    (1..3).each do |i|
+        config.vm.define "tom#{i}" do |tm|
+            tm.vm.provider "virtualbox" do |v|
+                v.name = "tom#{i}"
+                v.memory = 512
+            end
+            tm.vm.hostname = "tom#{i}"
+            tm.vm.network "private_network", ip: "192.168.10.2#{i}"
+            tm.vm.provision :shell, privileged: true, path: "./files/provisiont.sh"
+        end
+    end
+end
