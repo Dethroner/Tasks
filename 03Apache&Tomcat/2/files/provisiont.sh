@@ -55,8 +55,6 @@ Restart=always
 WantedBy=multi-user.target
 EOF
 
-done
-
 # Edit configs
 sed -i '103 i <Connector protocol="AJP/1.3" port="8009" redirectPort="8443" address="0.0.0.0" secretRequired="false" />' /opt/tomcat/conf/server.xml
 

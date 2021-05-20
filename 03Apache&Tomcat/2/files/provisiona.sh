@@ -2,10 +2,15 @@
 
 yum update -y
 yum install -y java-11-openjdk httpd httpd-devel curl
+
+systemctl disable firewalld
+
 #alternatives --config java
 JAVAP="/usr/lib/jvm/java-11-openjdk-11.0.11.0.9-1.el7_9.x86_64"
 export JAVA_HOME=$JAVAP
 export PATH=$PATH:$JAVAP/bin
+
+systemctl disable firewalld
 
 # Install mod_jk
 cd /tmp
@@ -63,9 +68,6 @@ JkMount /clusterjsp/* loadbalancer
 
 <Location /stat/>
     JkMount status
-    Order deny,allow
-    Deny from all
-    Allow from 0.0.0.0
 </Location>
 EOF
 

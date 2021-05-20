@@ -19,7 +19,6 @@ Vagrant.configure("2") do |config|
         ap.vm.provision :shell, privileged: true, path: "./files/provisiona.sh"
         ap.vm.provision :shell, privileged: true, inline: <<-SHELL
             sed -i '7s/enforcing/disabled/' /etc/selinux/config
-            systemctl stop firewalld
         SHELL
         ap.vm.provision :reload
     end
@@ -31,8 +30,18 @@ Vagrant.configure("2") do |config|
                 v.memory = 512
             end
             tm.vm.hostname = "tom#{i}"
-            tm.vm.network "private_network", ip: "192.168.10.2#{i}"
+            tm.vm.network "private_network", ip: "192.168.1.#{i + 20}"
+            tm.vm.synced_folder ".", "/vagrant", type: "virtualbox"
             tm.vm.provision :shell, privileged: true, path: "./files/provisiont.sh"
+            tm.vm.provision :shell, privileged: true, inline: <<-SHELL
+                sed -i '22s/port="8005"/port="8#{i}05"/' /opt/tomcat/conf/server.xml
+                sed -i '68s/port="8080"/port="808#{i}"/' /opt/tomcat/conf/server.xml
+                sed -i '103s/port="8009"/port="8#{i}09"/' /opt/tomcat/conf/server.xml
+                sed -i '114s/defaultHost="localhost"/defaultHost="localhost" jvmRoute="tom#{i}"/' /opt/tomcat/conf/server.xml
+                sed -i '122 i <Cluster className="org.apache.catalina.ha.tcp.SimpleTcpCluster"/>' /opt/tomcat/conf/server.xml
+                cp -a /vagrant/files/clusterjsp /opt/tomcat/webapps/
+                chown -R tomcat /opt/tomcat/webapps/
+            SHELL
         end
     end
 end
