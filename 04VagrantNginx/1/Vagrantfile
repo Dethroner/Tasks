@@ -1,0 +1,46 @@
+IMAGE_NAME = "sbeliakou/centos"
+NET="192.168.56"
+
+servers=[
+    {
+        :n => 1, :hostname => "web", :cpu => 2, :ram => 1000, :ip => 10, :shell => "provisiona.sh"
+    },
+    {
+        :n => 2, :hostname => "tom", :cpu => 1, :ram => 2000, :ip => 20, :shell => "provisiont.sh"
+    },
+]
+
+Vagrant.configure(2) do |config|
+
+    config.vm.box=IMAGE_NAME
+
+    servers.each do |pc|
+        if pc[:n] > 1 then 
+            (1..pc[:n]).each do |i|
+                config.vm.define pc[:hostname]+"#{i}" do |node|
+                    node.vm.hostname = pc[:hostname]+"#{i}"
+                    node.vm.provider "virtualbox" do |v|
+                        v.name = pc[:hostname]+"#{i}"
+                        v.cpus = pc[:cpu]
+                        v.memory = pc[:ram]
+                    end
+                    node.vm.network "private_network", ip: NET+".#{i+pc[:ip]-1}"
+
+                    node.vm.provision "shell", path: pc[:shell]
+                end
+            end
+        elsif pc[:n] == 1
+            config.vm.define pc[:hostname] do |node|
+                node.vm.hostname = pc[:hostname]
+                node.vm.provider "virtualbox" do |v|
+                    v.name = pc[:hostname]
+                    v.cpus = pc[:cpu]
+                    v.memory = pc[:ram]
+                end
+                node.vm.network "private_network", ip: NET+".#{pc[:ip]}"
+
+                node.vm.provision "shell", path: pc[:shell]         
+            end
+        end
+    end
+end
