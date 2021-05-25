@@ -24,15 +24,15 @@ height=48 width=48 alt="CentOS Logo" />
 
 ## CentOS 7:
 
-<li>Для выполнения задания 5 использовал [VM's](../01CentOS/1).</li>
+<li>Для выполнения задания 5 использовал [VM's](../01CentOS/1/).</li>
 
-<li>Для простых задач использую [VM](../01CentOS/2) подключаюсь, так:</li>
+<li>Для простых задач использую [VM](../01CentOS/2/) подключаюсь, так:</li>
 
 ```
 ssh appuser@192.168.1.5 -i ~/.ssh/appuser
 ```
 
-<b>!!!</b> Пользователям надо заменить [appuser.pub](../01CentOS/2/files/.sshkey) на собственный.
+<b>!!!</b> Пользователям надо заменить [appuser.pub](../main/01CentOS/2/files/.sshkey/appuser.pub) на собственный.
 </p>
 </details>
 
