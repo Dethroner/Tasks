@@ -24,9 +24,9 @@ height=48 width=48 alt="CentOS Logo" />
 
 ## CentOS 7:
 
-<li>Для выполнения задания 5 использовал [VM's](../01CentOS/1/).</li>
+<li>Для выполнения задания 5 использовал [VM's](/tree/main/01CentOS/1/).</li>
 
-<li>Для простых задач использую [VM](../01CentOS/2/) подключаюсь, так:</li>
+<li>Для простых задач использую [VM](/tree/main/01CentOS/2/) подключаюсь, так:</li>
 
 ```
 ssh appuser@192.168.1.5 -i ~/.ssh/appuser
