@@ -7,11 +7,11 @@ EPAM<br>
 <img
 src="../main/02Git/images/git.png"
 height=48 width=48 alt="Git Logo" /><img
-src="https://cdn.imgbin.com/11/20/3/imgbin-vagrant-hashicorp-virtual-machine-software-developer-installation-vagrant-ywTTwLKhjrGBxXiPdJNgpkc9D.jpg"
+src="../main/02Git/images/vagrant.jpg"
 height=48 width=48 alt="Vagrant Logo" /><img
-src="https://www.virtualbox.org/graphics/vbox_logo2_gradient.png"
+src="../main/02Git/images/VB.png"
 height=48 width=48 alt="VirtualBox Logo" /><img
-src="https://4.bp.blogspot.com/-pzbhEk68WJA/V_foOw_QWzI/AAAAAAAAlgg/9_xcZCTxhWo_S2ftXEyFdCw5Wk-CunNzwCLcB/s1600/centos-logo.png"
+src="../main/02Git/images/CentOS.png"
 height=48 width=48 alt="CentOS Logo" />
 
 Для работы нужны:
