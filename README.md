@@ -12,7 +12,13 @@ height=48 width=48 alt="Vagrant Logo" /><img
 src="../main/02Git/images/VB.png"
 height=48 width=48 alt="VirtualBox Logo" /><img
 src="../main/02Git/images/CentOS.png"
-height=48 width=48 alt="CentOS Logo" />
+height=48 width=48 alt="CentOS Logo" /><img
+src="../main/02Git/images/apache.png"
+height=48 width=48 alt="Apache Logo" /><img
+src="../main/02Git/images/tomcat.png"
+height=48 width=48 alt="Tomcat Logo" /><img
+src="../main/02Git/images/nginx.png"
+height=48 width=48 alt="Nginx Logo" />
 
 Для работы нужны:
 1. Установленный Vagrant<br>
