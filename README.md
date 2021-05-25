@@ -5,7 +5,7 @@ EPAM<br>
 [![License](https://img.shields.io/badge/license-MIT%20License-brightgreen.svg)](https://opensource.org/licenses/MIT)
 
 <img
-src="../02Git/images/git.png"
+src="../main/02Git/images/git.png"
 height=48 width=48 alt="Git Logo" /><img
 src="https://cdn.imgbin.com/11/20/3/imgbin-vagrant-hashicorp-virtual-machine-software-developer-installation-vagrant-ywTTwLKhjrGBxXiPdJNgpkc9D.jpg"
 height=48 width=48 alt="Vagrant Logo" /><img
@@ -41,7 +41,7 @@ ssh appuser@192.168.1.5 -i ~/.ssh/appuser
 
 ## Git:
 
-Результат выполнения задания опубликован в [Report'e](../02Git/Report.md)
+Результат выполнения задания опубликован в [Report'e](../main/02Git/Report.md)
 
 </p>
 </details>
