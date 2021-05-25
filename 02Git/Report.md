@@ -5,14 +5,14 @@ EPAM<br>
 #DevOps<br>
 
 <img
-src="../branch/images/git.png"
+src="../images/git.png"
 height=48 width=48 alt="Git Logo" />
 
 ---
 
 ### Исходные данные
 
-Основные задачи сформулированы в [задании](../branch/README.md).
+Основные задачи сформулированы в [задании](../README.md).
 
 ---
 
@@ -333,4 +333,4 @@ git pull
 
 ---
 
-<img src="../branch/images/End.jpg" />
+<img src="../images/End.jpg" />
