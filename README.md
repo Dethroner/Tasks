@@ -5,6 +5,8 @@ EPAM<br>
 [![License](https://img.shields.io/badge/license-MIT%20License-brightgreen.svg)](https://opensource.org/licenses/MIT)
 
 <img
+src="../02Git/images/git.png"
+height=48 width=48 alt="Git Logo" /><img
 src="https://cdn.imgbin.com/11/20/3/imgbin-vagrant-hashicorp-virtual-machine-software-developer-installation-vagrant-ywTTwLKhjrGBxXiPdJNgpkc9D.jpg"
 height=48 width=48 alt="Vagrant Logo" /><img
 src="https://www.virtualbox.org/graphics/vbox_logo2_gradient.png"
@@ -33,3 +35,14 @@ ssh appuser@192.168.1.5 -i ~/.ssh/appuser
 <b>!!!</b> Пользователям надо заменить [appuser.pub](Tasks\01CentOS\2\files\.sshkey\) на собственный.
 </p>
 </details>
+
+<details><summary>02. Git.</summary>
+<p>
+
+## Git:
+
+Результат выполнения задания опубликован в [Report'e](../02Git/Report.md)
+
+</p>
+</details>
+
