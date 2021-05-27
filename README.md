@@ -21,9 +21,10 @@ src="../main/02Git/images/nginx.png"
 height=48 width=48 alt="Nginx Logo" />
 
 Для работы нужны:
-1. Установленный Vagrant<br>
-2. Установленный VirtualBox + VirtualBox Extension Pack<br>
-При утановке VirtualBox Host-Only Ethernet Adapter по-умолчанию добавляется VirtualBox Host-Only Ethernet Adapter. При написании Vagrantfile отталкиваюсь от того что он есть, потому его не учитываю в работе (у меня он переконфигурирован под тестовую сеть 192.168.1.0/24).
+1. Установленный Git.<br>
+2. Установленный Vagrant<br>
+3. Установленный VirtualBox + VirtualBox Extension Pack<br>
+При утановке VirtualBox Host-Only Ethernet Adapter по-умолчанию добавляется VirtualBox Host-Only Ethernet Adapter. При написании Vagrantfile отталкиваюсь от того что он есть, потому его не учитываю в работе.
 
 <details><summary>01. Centos 7.</summary>
 <p>

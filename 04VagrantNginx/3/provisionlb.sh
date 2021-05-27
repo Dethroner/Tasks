@@ -132,14 +132,14 @@ server {
 
 server {
     listen       8443 ssl;
-	server_name  192.168.56.10;
+    server_name  192.168.56.10;
 
     ssl_certificate /home/vagrant/nginx/ssl/server.crt;
     ssl_certificate_key /home/vagrant/nginx/ssl/server.key;
 
     location ~^/status {
-		allow  192.168.56.1;
-		deny   all;	
+        allow  192.168.56.1;
+        deny   all; 
         vhost_traffic_status_display;
         vhost_traffic_status_display_format html;
     }
@@ -149,7 +149,7 @@ server {
 
     location / {
         proxy_pass http://backend;
-	}
+    }
 
 }
 EOF
