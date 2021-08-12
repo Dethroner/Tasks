@@ -1,0 +1,50 @@
+required_plugins = %w( vagrant-reload vagrant-vbguest )
+required_plugins.each do |plugin|
+    system "vagrant plugin install #{plugin}" unless Vagrant.has_plugin? plugin
+end 
+
+Vagrant.configure("2") do |config|
+    config.vm.box="gbailey/amzn2"
+    config.vm.define "ldap" do |ap|
+        ap.vm.provider "virtualbox" do |v|
+            v.name = "ldap"
+            v.memory = 2048
+            v.cpus = 2
+        end
+        ap.vm.network "private_network", ip: "192.168.1.10"
+         [80, 389].flatten.each do |port|
+             ap.vm.network "forwarded_port", guest: port, host: port, host_ip: "127.0.0.1"
+         end
+        ap.vm.hostname = "ldap"
+        
+        ap.vm.synced_folder ".", "/vagrant", type: "virtualbox"
+               
+        ap.vm.provision :shell, privileged: true, path: "./files/ldap-db.sh"
+     
+    end
+    
+    config.vm.define "client" do |master|
+		master.vm.provider "virtualbox" do |v|
+			v.name = "client"
+			v.memory = 2048
+			v.cpus = 2
+		end
+		master.vm.box = "generic/centos8"
+		master.vm.network "private_network", ip: "192.168.1.20"
+		master.vm.hostname = "client"
+        
+		master.vm.provision :shell, privileged: true, inline: <<-SHELL 
+            yum update -y && yum install -y openldap openldap-clients nss-pam-ldapd
+            authconfig --enableldap \
+                       --enableldapauth \
+                       --ldapserver=192.168.1.10 \
+                       --ldapbasedn="dc=devopslab,dc=com" \
+                       --enablemkhomedir \
+                       --update
+            getent passwd 
+        SHELL
+             
+	end
+
+    
+end
