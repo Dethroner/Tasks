@@ -1,0 +1,43 @@
+required_plugins = %w( vagrant-reload vagrant-vbguest )
+required_plugins.each do |plugin|
+    system "vagrant plugin install #{plugin}" unless Vagrant.has_plugin? plugin
+end 
+
+Vagrant.configure("2") do |config|
+    config.vm.box="generic/centos8"
+    config.vm.define "prom" do |ap|
+        ap.vm.provider "virtualbox" do |v|
+            v.name = "prom"
+            v.memory = 4096
+            v.cpus = 2
+        end
+        ap.vm.network "private_network", ip: "192.168.1.10"
+        ap.vm.hostname = "prom"
+        
+        ap.vm.synced_folder ".", "/vagrant", type: "virtualbox"
+               
+        ap.vm.provision :shell, privileged: true, path: "./files/install.sh"
+     
+    end
+
+    config.vm.define "tom" do |tm|
+        tm.vm.box = "generic/debian10"
+        tm.vm.provider "virtualbox" do |v|
+            v.name = "tom"
+            v.memory = 512
+        end
+        tm.vm.network "forwarded_port", guest: 8080, host: 8080, host_ip: "127.0.0.1"
+        tm.vm.hostname = "tom"
+        tm.vm.network "private_network", ip: "192.168.1.20"
+        tm.vm.synced_folder ".", "/vagrant", type: "virtualbox"
+        tm.vm.provision :shell, privileged: true, path: "./files/provisiont.sh"
+        tm.vm.provision :shell, privileged: true, inline: <<-SHELL
+            sed -i '114s/defaultHost="localhost"/defaultHost="localhost" jvmRoute="tom"/' /opt/tomcat/conf/server.xml
+            sed -i '122 i <Cluster className="org.apache.catalina.ha.tcp.SimpleTcpCluster"/>' /opt/tomcat/conf/server.xml
+            cp -a /vagrant/files/sample /opt/tomcat/webapps/
+            chown -R tomcat /opt/tomcat/webapps/
+            ###
+            sh /vagrant/files/node-exporter.sh
+        SHELL
+    end
+end
