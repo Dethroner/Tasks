@@ -1,0 +1,53 @@
+required_plugins = %w( vagrant-reload vagrant-vbguest )
+required_plugins.each do |plugin|
+    system "vagrant plugin install #{plugin}" unless Vagrant.has_plugin? plugin
+end 
+
+Vagrant.configure("2") do |config|
+    config.vm.box="generic/centos8"
+    config.vm.define "zabbix" do |ap|
+        ap.vm.provider "virtualbox" do |v|
+            v.name = "zabbix"
+            v.memory = 4096
+            v.cpus = 2
+        end
+        ap.vm.network "private_network", ip: "192.168.1.10"
+        ap.vm.hostname = "zabbix"
+        
+        ap.vm.synced_folder ".", "/vagrant", type: "virtualbox"
+               
+        ap.vm.provision :shell, privileged: true, path: "./files/install.sh"
+     
+    end
+
+    config.vm.define "tom" do |tm|
+        tm.vm.box = "generic/debian10"
+        tm.vm.provider "virtualbox" do |v|
+            v.name = "tom"
+            v.memory = 512
+        end
+        tm.vm.network "forwarded_port", guest: 8080, host: 8080, host_ip: "127.0.0.1"
+        tm.vm.hostname = "tom"
+        tm.vm.network "private_network", ip: "192.168.1.20"
+        tm.vm.synced_folder ".", "/vagrant", type: "virtualbox"
+        tm.vm.provision :shell, privileged: true, path: "./files/provisiont.sh"
+        tm.vm.provision :shell, privileged: true, inline: <<-SHELL
+            sed -i '114s/defaultHost="localhost"/defaultHost="localhost" jvmRoute="tom"/' /opt/tomcat/conf/server.xml
+            sed -i '122 i <Cluster className="org.apache.catalina.ha.tcp.SimpleTcpCluster"/>' /opt/tomcat/conf/server.xml
+            cp -a /vagrant/files/sample /opt/tomcat/webapps/
+            chown -R tomcat /opt/tomcat/webapps/
+            cd /tmp
+            wget https://repo.zabbix.com/zabbix/4.4/debian/pool/main/z/zabbix-release/zabbix-release_4.4-1+buster_all.deb
+            dpkg -i zabbix-release_4.4-1+buster_all.deb
+            apt update -y
+            apt install -y zabbix-agent
+            sed -i '/Server=127/c Server=192.168.1.10' /etc/zabbix/zabbix_agentd.conf
+            sed -i 's|# ListenPort=10050|ListenPort=10050|g' /etc/zabbix/zabbix_agentd.conf
+            sed -i '/ServerActive=127/c ServerActive=192.168.1.10' /etc/zabbix/zabbix_agentd.conf
+            systemctl enable zabbix-agent
+            systemctl start zabbix-agent
+            # ufw allow 10050
+            # ufw reload
+        SHELL
+    end
+end
